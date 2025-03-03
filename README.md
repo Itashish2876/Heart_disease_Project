@@ -38,7 +38,7 @@ The dataset used in this project contains various health attributes (age, choles
 1. **Clone the repository:**
 2. **Install required libraries:**
 3. **Run Jupyter Notebook to train and evaluate the model.**
-4. **To run the Flask app (optional):**
+4. **To run the Streamlit app (optional):**
  
 
 
@@ -49,8 +49,3 @@ The dataset used in this project contains various health attributes (age, choles
 
 ## 📬 Contact
 For any suggestions, questions, or contributions, feel free to raise an issue or reach out via GitHub.
-
-
-
-
-
