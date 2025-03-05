@@ -36,7 +36,10 @@ st.markdown(
 )
 
 st.markdown('<div class="main">', unsafe_allow_html=True)
-st.title(" Heart Disease Prediction Model")
+st.title("🫀 Heart Disease Prediction Model  ")
+
+
+
 
 col1, col2 = st.columns(2)
 
