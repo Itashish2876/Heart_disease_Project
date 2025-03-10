@@ -37,7 +37,6 @@ except FileNotFoundError:
 st.sidebar.title("ℹ️ Input Guidelines")
 st.sidebar.write("**Age:** 32 to 70 years")
 st.sidebar.write("**Cholesterol:** 100 to 700 mg/dL")
-st.sidebar.write("**Diastolic Blood Pressure:** 45 to 150 mmHg")
 st.sidebar.write("**Systolic Blood Pressure:** 83 to 300 mmHg")
 st.sidebar.write("**Heart Rate:** 44 to 150 mmHg")
 st.sidebar.write("**Glucose:** 40 to 400 mg/dL")
@@ -45,42 +44,40 @@ st.sidebar.write("**BMI:** 15 to 60")
 
 col1, col2 = st.columns(2)
 
+glucose = st.number_input("Glucose Level:", min_value=40.0, max_value=400.0, value=100.0, step=1.0)
+    
 with col1:
     age = st.number_input("Enter Age:", min_value=32, max_value=70, value=40, step=1)
     gender = st.selectbox("Select Gender:", ['Male', 'Female'])
     currentSmoker = st.selectbox("Is Current Smoker?", ['Yes', 'No'])
-    cigsPerDay = st.number_input("Cigarettes per Day:", min_value=0.0, step=1.0)
     BPMeds = st.selectbox("On Blood Pressure Medication?", ['Yes', 'No'])
     prevalentStroke = st.selectbox("Had a Stroke?", ['Yes', 'No'])
-    prevalentHyp = st.selectbox("Has Hypertension?", ['Yes', 'No'])
+   
 
 with col2:
     diabetes = st.selectbox("Has Diabetes?", ['Yes', 'No'])
     totChol = st.number_input("Total Cholesterol Level:", min_value=100.0, max_value=700.0, value=200.0, step=1.0)
     sysBP = st.number_input("Systolic Blood Pressure:", min_value=83.0, max_value=300.0, value=120.0, step=1.0)
-    diaBP = st.number_input("Diastolic Blood Pressure:", min_value=45.0, max_value=150.0, value=80.0, step=1.0)
     BMI = st.number_input("Body Mass Index (BMI):", min_value=15.0, max_value=60.0, value=25.0, step=0.1)
     heartRate = st.number_input("Heart Rate:", min_value=44, max_value=150, value=70, step=1)
-    glucose = st.number_input("Glucose Level:", min_value=40.0, max_value=400.0, value=100.0, step=1.0)
-
+    
 # Helper function to encode and predict
-def predict_heart_disease(gender, age, currentSmoker, cigsPerDay, BPMeds, 
-                          prevalentStroke, prevalentHyp, diabetes, totChol, 
-                          sysBP, diaBP, BMI, heartRate, glucose):
+def predict_heart_disease(gender, age, currentSmoker,  BPMeds, 
+                          prevalentStroke, diabetes, totChol, 
+                          sysBP,  BMI, heartRate, glucose):
     
     # Fixed encoding for categorical variables
     gender_encoded = 1 if gender == 'Male' else 0
     currentSmoker_encoded = 1 if currentSmoker == 'Yes' else 0
     BPMeds_encoded = 1 if BPMeds == 'Yes' else 0
     prevalentStroke_encoded = 1 if prevalentStroke == 'Yes' else 0
-    prevalentHyp_encoded = 1 if prevalentHyp == 'Yes' else 0
     diabetes_encoded = 1 if diabetes == 'Yes' else 0
 
    # Prepare feature array (ensure correct order)
     features = np.array([[
-        gender_encoded, age, currentSmoker_encoded, cigsPerDay,
-        BPMeds_encoded, prevalentStroke_encoded, prevalentHyp_encoded,
-        diabetes_encoded, totChol, sysBP, diaBP, BMI, heartRate, glucose
+        gender_encoded, age, currentSmoker_encoded, 
+        BPMeds_encoded, prevalentStroke_encoded, 
+        diabetes_encoded, totChol, sysBP, BMI, heartRate, glucose
     ]])
 
    # Scale the features using pre-fitted scaler
@@ -92,9 +89,9 @@ def predict_heart_disease(gender, age, currentSmoker, cigsPerDay, BPMeds,
 
 # Predict button with results block
 if st.button('🔎 Predict'):
-    result = predict_heart_disease(gender, age, currentSmoker, cigsPerDay, BPMeds, 
-                                   prevalentStroke, prevalentHyp, diabetes, totChol, 
-                                   sysBP, diaBP, BMI, heartRate, glucose)
+    result = predict_heart_disease(gender, age, currentSmoker, BPMeds, 
+                                   prevalentStroke, diabetes, totChol, 
+                                   sysBP, BMI, heartRate, glucose)
 
     st.markdown("---")    # <- This adds a nice separator line
     if result == 1:
